@@ -1,0 +1,9 @@
+﻿  TCPclient.c
+D:\공부\workspace\netProj\네트워크 프로그래밍 과제\PlayerClient\PlayerClient\TCPclient.c(114,36): warning C4047: '함수': 'const char *'의 간접 참조 수준이 'int (*)[513]'과(와) 다릅니다.
+D:\공부\workspace\netProj\네트워크 프로그래밍 과제\PlayerClient\PlayerClient\TCPclient.c(114,32): warning C4024: 'send': 형식 및 실제 매개 변수 2의 형식이 서로 다릅니다.
+D:\공부\workspace\netProj\네트워크 프로그래밍 과제\PlayerClient\PlayerClient\TCPclient.c(121,11): warning C4477: 'printf' : 서식 문자열 '%s'에 'char *' 형식의 인수가 필요하지만 variadic 인수 1의 형식이 'int *'입니다.
+D:\공부\workspace\netProj\네트워크 프로그래밍 과제\PlayerClient\PlayerClient\TCPclient.c(123,37): warning C4047: '함수': 'char *'의 간접 참조 수준이 'int (*)[513]'과(와) 다릅니다.
+D:\공부\workspace\netProj\네트워크 프로그래밍 과제\PlayerClient\PlayerClient\TCPclient.c(123,33): warning C4024: 'recvn': 형식 및 실제 매개 변수 2의 형식이 서로 다릅니다.
+D:\공부\workspace\netProj\네트워크 프로그래밍 과제\PlayerClient\PlayerClient\TCPclient.c(156,10): warning C4477: 'printf' : 서식 문자열 '%s'에 'char *' 형식의 인수가 필요하지만 variadic 인수 1의 형식이 'int *'입니다.
+D:\공부\workspace\netProj\네트워크 프로그래밍 과제\PlayerClient\PlayerClient\TCPclient.c(77,32): warning C4996: 'inet_addr': Use inet_pton() or InetPton() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
+  PlayerClient.vcxproj -> D:\공부\workspace\netProj\네트워크 프로그래밍 과제\PlayerClient\Debug\PlayerClient.exe

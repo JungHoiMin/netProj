@@ -1,0 +1,4 @@
+﻿  echo_selectserv_win.c
+D:\공부\workspace\netProj\네트워크 프로그래밍 과제\Server\Server\echo_selectserv_win.c(57,13): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+D:\공부\workspace\netProj\네트워크 프로그래밍 과제\Server\Server\echo_selectserv_win.c(69,25): warning C4996: 'inet_ntoa': Use inet_ntop() or InetNtop() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
+  Server.vcxproj -> D:\공부\workspace\netProj\네트워크 프로그래밍 과제\Server\Debug\Server.exe
