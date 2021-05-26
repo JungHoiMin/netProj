@@ -4,10 +4,17 @@
 #include <winsock2.h>
 
 #define BUF_SIZE 1024
+#define MIN_MOVE 1
+#define MAX_MOVE 75
 void ErrorHandling(char *message);
 
 int main(int argc, char *argv[])
 {
+	int player_x = 39;
+	int player_dx = 0;
+	int player_fire = 0;
+	int clientInfo;
+
 	WSADATA wsaData;
 	SOCKET hServSock, hClntSock;
 	SOCKADDR_IN servAdr, clntAdr, clientaddr;
@@ -15,11 +22,10 @@ int main(int argc, char *argv[])
 	fd_set reads, cpyReads;
 
 	int adrSz;
-	int strLen, fdNum, i;
-	char buf[BUF_SIZE];
+	int strLen, fdNum, i,j;
+	int recv_buf[BUF_SIZE];
+	int send_buf[BUF_SIZE];
 	int addrlen;
-	int x;
-	int clientNumber = 0;
 
 	if(argc!=2) {
 		printf("Usage : %s <port>\n", argv[0]);
@@ -64,34 +70,59 @@ int main(int argc, char *argv[])
 					hClntSock=
 						accept(hServSock, (SOCKADDR*)&clntAdr, &adrSz);
 					FD_SET(hClntSock, &reads);
-					clientNumber++;
 					printf("connected client: Port:%d, IP:%s \n", 
 						clntAdr.sin_port, inet_ntoa(clntAdr.sin_addr)	
 					);
 				}
 				else    // read message!
 				{
-					strLen=recv(reads.fd_array[i], buf, BUF_SIZE-1, 0);
+					strLen=recv(reads.fd_array[i], recv_buf, 12, 0);
 					if(strLen<=0)    // close request!
 					{
 						FD_CLR(reads.fd_array[i], &reads);
 						closesocket(cpyReads.fd_array[i]);
-						clientNumber--;
 						printf("closed client: %d, StrLen:%d \n", 
 							cpyReads.fd_array[i], strLen );
 					}
 					else
-					{	
-						// 클라이언트 정보 얻기						
+					{						
+						// 클라이언트 정보 얻기			
+						send_buf[0] = reads.fd_count;
+						send_buf[1] = 0;
+						send_buf[2] = 0;
 						addrlen = sizeof(clientaddr);
 						getpeername(reads.fd_array[i], (SOCKADDR *)&clientaddr, &addrlen);
-						if (buf[0] == 1) {
-							printf("1번입니다.");
-							x = buf[1];
-							buf[2] = '\0';
-							Sleep(2000);
+						clientInfo = recv_buf[0];
+
+						if (clientInfo == 1) {	// 1: player
+							player_dx = recv_buf[1];
+							player_fire = recv_buf[2];
+
+							switch (player_dx) {
+							case 1: player_dx = 0; break;
+							case 2: player_dx = -1; break;
+							case 3: player_dx = 1; break;
+							}
+
+							player_x += player_dx;
+							if (player_x < MIN_MOVE) {
+								player_x = MIN_MOVE;
+							}
+							else if (player_x > MAX_MOVE) {
+								player_x = MAX_MOVE;
+							}
+
+							send_buf[1] = player_x;
+							send_buf[2] = player_fire;
 						}
-						send(reads.fd_array[1], buf, BUF_SIZE, 0);    // echo!
+						printf("%d, %d\n", send_buf[0], send_buf[1]);
+						for (j = 0; j < reads.fd_count; j++) {
+							if (FD_ISSET(reads.fd_array[j], &cpyReads)) {
+								send(reads.fd_array[j], &send_buf, reads.fd_count * 8 + 4, 0);    // echo!
+							}
+								
+						}
+						
 					}
 				}
 			}

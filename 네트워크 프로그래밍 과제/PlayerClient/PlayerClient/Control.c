@@ -4,17 +4,17 @@
 
 int PlayerActivity() {
 	int nSelect = 0;
-	int x = 0;
+	int x = 1;
 	if (kbhit()) {
 		nSelect = getch();
 		if (nSelect == 224) {
 			nSelect = getch();
 			switch (nSelect) {
 			case KEY_LEFT:
-				x = -1;
+				x = 2;
 				break;
 			case KEY_RIGHT:
-				x = 1;
+				x = 3;
 				break;
 			case KEY_SPACE:
 				x = -11;

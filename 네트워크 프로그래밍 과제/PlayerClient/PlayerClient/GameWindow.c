@@ -25,9 +25,9 @@ void WindowSetting() {
 
 void PrintPlayer(int x) {
 	int i, j;
-	const int y = 40;
+	const int player_y = 40;
 	for (i = 0; i < 5; i++) {
-		GotoXY(x, y + i);
+		GotoXY(x, player_y + i);
 		for (int j = 0; j < 5; j++) {
 			switch (player[i][j]) {
 			case 0:

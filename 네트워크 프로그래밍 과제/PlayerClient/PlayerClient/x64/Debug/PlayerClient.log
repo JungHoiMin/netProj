@@ -1,0 +1,11 @@
+﻿  TCPclient.c
+D:\workspace\netProj\네트워크 프로그래밍 과제\PlayerClient\PlayerClient\TCPclient.c(31,37): warning C4028: 정식 매개 변수 1이(가) 선언과 다릅니다.
+D:\workspace\netProj\네트워크 프로그래밍 과제\PlayerClient\PlayerClient\TCPclient.c(41,26): warning C4028: 정식 매개 변수 2이(가) 선언과 다릅니다.
+D:\workspace\netProj\네트워크 프로그래밍 과제\PlayerClient\PlayerClient\TCPclient.c(46,25): warning C4133: '함수': 'int *'과(와) 'char *' 사이의 형식이 호환되지 않습니다.
+D:\workspace\netProj\네트워크 프로그래밍 과제\PlayerClient\PlayerClient\TCPclient.c(74,31): warning C4996: 'inet_addr': Use inet_pton() or InetPton() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
+D:\workspace\netProj\네트워크 프로그래밍 과제\PlayerClient\PlayerClient\TCPclient.c(92,26): warning C4047: '함수': 'char *'의 간접 참조 수준이 'int (*)[512]'과(와) 다릅니다.
+D:\workspace\netProj\네트워크 프로그래밍 과제\PlayerClient\PlayerClient\TCPclient.c(92,22): warning C4024: 'recv': 형식 및 실제 매개 변수 2의 형식이 서로 다릅니다.
+D:\workspace\netProj\네트워크 프로그래밍 과제\PlayerClient\PlayerClient\TCPclient.c(83,6): warning C4101: 'i' :참조되지 않은 지역 변수입니다.
+D:\workspace\netProj\네트워크 프로그래밍 과제\PlayerClient\PlayerClient\TCPclient.c(125,40): warning C4047: '함수': 'const char *'의 간접 참조 수준이 'int (*)[512]'과(와) 다릅니다.
+D:\workspace\netProj\네트워크 프로그래밍 과제\PlayerClient\PlayerClient\TCPclient.c(125,36): warning C4024: 'send': 형식 및 실제 매개 변수 2의 형식이 서로 다릅니다.
+  PlayerClient.vcxproj -> D:\workspace\netProj\네트워크 프로그래밍 과제\PlayerClient\x64\Debug\PlayerClient.exe
