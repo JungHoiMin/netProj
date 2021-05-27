@@ -1,34 +1,32 @@
 /*
 * 최초 작성자: 정회민
-* 최초 작성일: 2021.05.25
+* 최초 작성일: 2021.05.26
 * 최초 변경일:
 * 목적: 서버와 클라이언트를 이용한 갤러그 게임 제작(네트워크 프로그래밍)
-* 개정 이력:	2021.05.25
-				2021.05.26
+* 개정 이력:	2021.05.26
 * 저작권: 정회민
 */
+
 #include <WinSock2.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <process.h>
-#include "GameWindow.h"
-#include "Control.h"
 
 #define BUF_SIZE 512
 
 void ErrorDisplay(char* str);
-unsigned _stdcall ReceiveInfo(void);
-void SendInfo(void);
 void BasicSetting(int argc, char* argv[]);
+void SendInfo(void);
 
 int error;
 WSADATA winsockData;
 SOCKET clientSocket;
 SOCKADDR_IN serverAddr;
 int returnValue;
+int x, y = 0;
 
 int main(int argc, char* argv[]) {
 	BasicSetting(argc, argv);
-	_beginthreadex(NULL, 0, ReceiveInfo, 0, 0, NULL);
 	SendInfo();
 	return 0;
 }
@@ -39,7 +37,6 @@ void ErrorDisplay(char* str) {
 }
 
 void BasicSetting(int argc, char* argv[]) {
-	WindowSetting();
 	// 윈속 DLL:open()
 	error = WSAStartup(MAKEWORD(2, 2), &winsockData);
 	if (error != 0)
@@ -63,56 +60,28 @@ void BasicSetting(int argc, char* argv[]) {
 	}
 }
 
-unsigned _stdcall ReceiveInfo(void) {
-	int i;
-	int number_of_enemy = 0;
-	int player_fire = 0;
-	int buf[BUF_SIZE];
-	int player_x = 39;
-	while (1) {
-		//PrintPlayer(player_x);
-
-		player_fire = 0;
-		recv(clientSocket, &buf, 4, 0);
-		number_of_enemy = buf[0];
-		//recv(clientSocket, (int*)&buf[1], (number_of_enemy + 1) * sizeof(int)+4, 0);
-		recv(clientSocket, (int*)&buf[1], BUF_SIZE, 0);
-		//printf("%d\n", i);
-		player_x = buf[1];
-		player_fire = buf[2];
-		printf("%d, %d, %d입니다.\n", buf[0], buf[1], buf[2]);
-		if (player_fire == 1)
-			printf("총알 발사!");
-		// 적군 코딩
-		for (i = 1; i <= number_of_enemy; i++) {
-			printf("%d번째 적군: %d, %d입니다.\n", buf[i * 3], buf[i * 3 + 1], buf[i * 3 + 2]);
-		}
-	}
-}
-
 void SendInfo(void) {
-	int flag_fire, dx;
+	int dx = 0, life_time = 0;
 	int buf[BUF_SIZE];
+	srand(time(NULL));
+	x = rand() % 75 + 1;
 	while (1) {
-		buf[0] = 1;
-		flag_fire = 0;
-		dx = 0;
-		while (1) {
-			dx = PlayerActivity();
-			if (dx == 0)
-				continue;
-			else {
-				if (dx == -11) {	// 총알 발사
-					flag_fire = 1;
-					dx = 0;
-				}
-				break;
-			}
+		buf[0] = 2;
+		dx = rand() % 3;
+		switch (dx) {
+		case 0: dx = -1; break;
+		case 1: dx = 0; break;
+		case 2: dx = 1; break;
 		}
 
-		buf[1] = dx;
-		buf[2] = flag_fire;
-
+		x += dx;
+		buf[1] = x;
+		buf[2] = y;
+		Sleep(1000);
+		if ((life_time % 2) == 1) {
+			y++;
+		}
 		returnValue = send(clientSocket, &buf, 12, 0);
+		life_time++;
 	}
 }

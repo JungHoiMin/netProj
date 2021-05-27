@@ -1,4 +1,4 @@
-#include <Windows.h>
+ï»¿#include <Windows.h>
 #include <stdio.h>
 #include "GameWindow.h"
 
@@ -6,8 +6,8 @@
 int player[][5] = {
 	{0,0,0,0,0},
 	{0,0,1,0,0},
-	{0,2,3,4,0},
-	{0,5,0,5,0},
+	{0,1,2,1,0},
+	{0,3,0,3,0},
 	{0,0,0,0,0}
 };
 
@@ -20,7 +20,7 @@ void CursorInvisible() {
 
 void WindowSetting() {
 	CursorInvisible();
-	system("mode con cols=86 lines=50");	// cols: °¡·Î, lines: ¼¼·Î
+	system("mode con cols=86 lines=50");	// cols: Â°Â¡Â·ÃŽ, lines: Â¼Â¼Â·ÃŽ
 }
 
 void PrintPlayer(int x) {
@@ -34,19 +34,13 @@ void PrintPlayer(int x) {
 				printf("  ");
 				break;
 			case 1:
-				printf("¡â");
+				printf("â–³");
 				break;
 			case 2:
-				printf("¢·");
+				printf("â– ");
 				break;
 			case 3:
-				printf("¡á");
-				break;
-			case 4:
-				printf("¢¹");
-				break;
-			case 5:
-				printf("£À");
+				printf("â—‹");
 				break;
 			}
 		}

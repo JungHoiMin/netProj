@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{f22f1e72-b471-4d15-a786-8facb4eef5db}</ProjectGuid>
-    <RootNamespace>Server</RootNamespace>
+    <ProjectGuid>{dbf15832-0918-473a-976f-baa5fa3e2e98}</ProjectGuid>
+    <RootNamespace>EnemyClient</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -140,7 +140,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="echo_selectserv_win.c" />
+    <ClCompile Include="TCPClient_Enemy.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
