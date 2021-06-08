@@ -1,6 +1,0 @@
-﻿  TCPClient_Enemy.c
-C:\Users\Jung\source\repos\EnemyClient\EnemyClient\TCPClient_Enemy.c(55,31): warning C4996: 'inet_addr': Use inet_pton() or InetPton() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
-C:\Users\Jung\source\repos\EnemyClient\EnemyClient\TCPClient_Enemy.c(66,12): warning C4013: 'time'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
-C:\Users\Jung\source\repos\EnemyClient\EnemyClient\TCPClient_Enemy.c(84,40): warning C4047: '함수': 'const char *'의 간접 참조 수준이 'int (*)[512]'과(와) 다릅니다.
-C:\Users\Jung\source\repos\EnemyClient\EnemyClient\TCPClient_Enemy.c(84,36): warning C4024: 'send': 형식 및 실제 매개 변수 2의 형식이 서로 다릅니다.
-  EnemyClient.vcxproj -> C:\Users\Jung\source\repos\EnemyClient\Debug\EnemyClient.exe
