@@ -19,6 +19,7 @@
 void ErrorDisplay(char* str);
 void BasicSetting(int argc, char* argv[]);
 void SendInfo(void);
+unsigned _stdcall RecvDead(void);
 
 int error;
 WSADATA winsockData;
@@ -26,9 +27,11 @@ SOCKET clientSocket;
 SOCKADDR_IN serverAddr;
 int returnValue;
 int x, y = 0;
+int level = 1;
 
 int main(int argc, char* argv[]) {
 	BasicSetting(argc, argv);
+	_beginthreadex(NULL, 0, RecvDead, NULL, 0, NULL);
 	SendInfo();
 	return 0;
 }
@@ -66,7 +69,7 @@ void SendInfo(void) {
 	int dx = 0, life_time = 0;
 	int buf[BUF_SIZE];
 	srand(time(NULL));
-	x = rand() % 49 + 1;
+	x = rand()*4 % 49 + 1;
 	while (1) {
 		buf[0] = 2;
 		dx = rand() % 3;
@@ -76,17 +79,45 @@ void SendInfo(void) {
 		case 2: dx = 1; break;
 		}
 
-		x += dx;
-		buf[1] = x;
-		buf[2] = y;
-		Sleep(1000/60*20);
+		
 		if ((life_time % 2) == 1) {
 			y++;
 			if (y > 27) {
 				y = 0;
+				level++;
 			}
 		}
+
+		if (level == 1) {
+			buf[1] = x;
+			buf[2] = y;
+		}
+		else if(level == 2){
+			x += dx;
+			buf[1] = x;
+			buf[2] = y;
+		}
+		else{
+			x += (dx * 2);
+			buf[1] = x;
+			buf[2] = y;
+		}
+
+		Sleep(1000 / 60 * 20);
 		returnValue = send(clientSocket, &buf, 12, 0);
 		life_time++;
+	}
+}
+
+unsigned _stdcall RecvDead(void) {
+	int dead_flag;
+	int info;
+	while (1) {
+		dead_flag = recv(clientSocket, &info, sizeof(int), 0);
+		if (dead_flag <= 0) {
+			closesocket(clientSocket);
+			printf("파괴되었습니다.\n");
+			exit(1);
+		}
 	}
 }

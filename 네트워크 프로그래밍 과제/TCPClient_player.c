@@ -54,6 +54,7 @@ char screen[HEIGHT][WIDTH];
 int player_x = 26;
 const int player_y = 26;
 int score = 0;
+int send_buf[BUF_SIZE];
 
 ENEMY enemy[MAX_ENEMY];
 int number_of_enemy = 0;
@@ -80,7 +81,7 @@ void checkCrash(void);
 
 	windowSetting();
 	basicSetting(argc, argv, &clientSocket);
-	_beginthreadex(NULL, 0, receiveInfo, &(void*)clientSocket, 0, NULL);
+	_beginthreadex(NULL, 0, receiveInfo, NULL, 0, NULL);
 	_beginthreadex(NULL, 0, drawWindow, NULL, 0, NULL);
 	sendInfo(&clientSocket);
 	return 0;
@@ -135,6 +136,7 @@ unsigned _stdcall receiveInfo(void) {
 		number_of_enemy = buf[0];
 		player_x = buf[1];
 		if (buf[2] == 4) {
+			closesocket(clientSocket);
 			printf("Á¾·á");
 			return 0;
 
@@ -153,9 +155,9 @@ unsigned _stdcall receiveInfo(void) {
 void sendInfo(void) {
 	int dx;
 	int returnValue;
-	int buf[BUF_SIZE];
+	
 	while (1) {
-		buf[0] = 1;
+		send_buf[0] = 1;
 		dx = 0;
 		while (1) {
 			dx = playerActivity();
@@ -163,9 +165,9 @@ void sendInfo(void) {
 				continue;
 			break;
 		}
-		buf[1] = dx;
-		buf[2] = dead_eney;
-		returnValue = send(clientSocket, &buf, 12, 0);
+		send_buf[1] = dx;
+		send_buf[2] = dead_eney;
+		returnValue = send(clientSocket, &send_buf, 12, 0);
 		if (dead_eney != -1) {
 			dead_eney = -1;
 		}
@@ -311,6 +313,12 @@ void checkCrash(void) {
 				if (((bullet[j].y == enemy[i].y + 1) || (bullet[j].y == enemy[j].y)) &&
 					((bullet[j].x > enemy[i].x - 2) && (bullet[j].x < enemy[j].x + 2))) {
 					dead_eney = enemy[i].n;
+					send_buf[1] = 0;
+					send_buf[2] = dead_eney;
+					send(clientSocket, &send_buf, 12, 0);
+					if (dead_eney != -1) {
+						dead_eney = -1;
+					}
 					score++;
 					bullet[j].visible = 0;
 					break;
